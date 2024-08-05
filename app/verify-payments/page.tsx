@@ -33,7 +33,7 @@ export default function PaymentProof() {
     formData.append("amount", amount);
     formData.append("paymentProof", paymentProof);
 
-    const response = await fetch("https://api.vishnuprasadkuntar.me/payments", {
+    const response = await fetch("http://localhost:8009/payments", {
       method: "POST",
       body: formData,
     });
