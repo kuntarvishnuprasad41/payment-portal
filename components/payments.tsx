@@ -38,14 +38,15 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 
-export function Payments() {
+export function Payments({}) {
   const searchParams = useSearchParams();
   const [paymentState, setPaymentState] = useState(false);
+  const router = useRouter();
 
   const amount = searchParams.get("amount");
   return (
@@ -140,14 +141,17 @@ export function Payments() {
         {paymentState ? (
           <>
             <CardFooter>
-              <Button
+              <Link
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary-dark dark:text-primary-foreground-dark dark:hover:bg-primary-dark/90"
                 onClick={() => {
-                  setPaymentState((state) => !state);
+                  router.push({
+                    pathname: "/verify-payments",
+                    query: { amount },
+                  });
                 }}
               >
                 Upload payment Proof
-              </Button>
+              </Link>
             </CardFooter>
           </>
         ) : (
