@@ -28,12 +28,13 @@ export default function PaymentProof() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("username", username);
-    formData.append("utrNumber", utrNumber);
+    formData.append("userName", username);
     formData.append("amount", amount);
+    formData.append("utrCode", utrNumber);
+
     formData.append("paymentProof", paymentProof);
 
-    const response = await fetch("http://localhost:8009/payments", {
+    const response = await fetch("https://api.vishnuprasadkuntar.me/payments", {
       method: "POST",
       body: formData,
     });
@@ -46,104 +47,106 @@ export default function PaymentProof() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background dark:bg-[#1a1b1e]">
-      <Card className="w-full max-w-md p-6 md:p-8 bg-background dark:bg-[#1a1b1e] dark:border-[#2c2d30]">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <CreditCardIcon className="h-6 w-6 text-primary dark:text-primary-dark" />
-              <h1 className="text-2xl font-bold text-foreground dark:text-foreground-dark">
-                Payment Proof
-              </h1>
-            </div>
-            <Link
-              href="#"
-              className="text-primary dark:text-primary-dark hover:underline"
-              prefetch={false}
-            >
-              Need help?
-            </Link>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="grid gap-4">
-            <div className="grid gap-2">
-              <Label
-                htmlFor="username"
-                className="text-foreground dark:text-foreground-dark"
-              >
-                Username
-              </Label>
-              <Input
-                id="username"
-                placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="bg-background dark:bg-[#2c2d30] text-foreground dark:text-foreground-dark"
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground dark:text-muted-foreground-dark">
-                  Order Total
-                </span>
-                <span className="font-medium text-foreground dark:text-foreground-dark">
-                  INR {amount}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground dark:text-muted-foreground-dark">
-                  Item Description
-                </span>
-                <span className="text-foreground dark:text-foreground-dark"></span>
-              </div>
-              <Separator className="border-muted dark:border-muted-dark" />
-              <div className="flex items-center justify-between font-medium text-foreground dark:text-foreground-dark">
-                <span>Total</span>
-                <span>INR {amount}</span>
-              </div>
-            </div>
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <Label
-                  htmlFor="utr-number"
-                  className="text-foreground dark:text-foreground-dark"
-                >
-                  UTR Reference Number
-                </Label>
-                <Input
-                  id="utr-number"
-                  placeholder="Enter UTR reference number"
-                  value={utrNumber}
-                  onChange={(e) => setUtrNumber(e.target.value)}
-                  className="bg-background dark:bg-[#2c2d30] text-foreground dark:text-foreground-dark"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label
-                  htmlFor="payment-proof"
-                  className="text-foreground dark:text-foreground-dark"
-                >
+    <>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background dark:bg-[#1a1b1e]">
+        <Card className="w-full max-w-md p-6 md:p-8 bg-background dark:bg-[#1a1b1e] dark:border-[#2c2d30]">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CreditCardIcon className="h-6 w-6 text-primary dark:text-primary-dark" />
+                <h1 className="text-2xl font-bold text-foreground dark:text-foreground-dark">
                   Payment Proof
+                </h1>
+              </div>
+              <Link
+                href="#"
+                className="text-primary dark:text-primary-dark hover:underline"
+                prefetch={false}
+              >
+                Need help?
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="grid gap-4">
+              <div className="grid gap-2">
+                <Label
+                  htmlFor="userName"
+                  className="text-foreground dark:text-foreground-dark"
+                >
+                  Username
                 </Label>
                 <Input
-                  id="payment-proof"
-                  type="file"
-                  onChange={(e) => setPaymentProof(e.target.files[0])}
+                  id="userName"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="bg-background dark:bg-[#2c2d30] text-foreground dark:text-foreground-dark"
                 />
               </div>
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary-dark dark:text-primary-foreground-dark dark:hover:bg-primary-dark/90"
-            >
-              Submit Proof
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+              <div className="grid gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground dark:text-muted-foreground-dark">
+                    Order Total
+                  </span>
+                  <span className="font-medium text-foreground dark:text-foreground-dark">
+                    INR {amount}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground dark:text-muted-foreground-dark">
+                    Item Description
+                  </span>
+                  <span className="text-foreground dark:text-foreground-dark"></span>
+                </div>
+                <Separator className="border-muted dark:border-muted-dark" />
+                <div className="flex items-center justify-between font-medium text-foreground dark:text-foreground-dark">
+                  <span>Total</span>
+                  <span>INR {amount}</span>
+                </div>
+              </div>
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="utr-number"
+                    className="text-foreground dark:text-foreground-dark"
+                  >
+                    UTR Reference Number
+                  </Label>
+                  <Input
+                    id="utr-number"
+                    placeholder="Enter UTR reference number"
+                    value={utrNumber}
+                    onChange={(e) => setUtrNumber(e.target.value)}
+                    className="bg-background dark:bg-[#2c2d30] text-foreground dark:text-foreground-dark"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label
+                    htmlFor="payment-proof"
+                    className="text-foreground dark:text-foreground-dark"
+                  >
+                    Payment Proof
+                  </Label>
+                  <Input
+                    id="payment-proof"
+                    type="file"
+                    onChange={(e) => setPaymentProof(e.target.files[0])}
+                    className="bg-background dark:bg-[#2c2d30] text-foreground dark:text-foreground-dark"
+                  />
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary-dark dark:text-primary-foreground-dark dark:hover:bg-primary-dark/90"
+              >
+                Submit Proof
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }
 

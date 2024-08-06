@@ -39,13 +39,37 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export function page({}) {
   const searchParams = useSearchParams();
   const [paymentState, setPaymentState] = useState(false);
   const router = useRouter();
+  const [imageUrl, setImageUrl] = useState('')
+
+  const fetchImage = async () => {
+    try {
+      const response = await fetch('https://api.vishnuprasadkuntar.me/banks'); // Ensure the URL matches your API endpoint
+      if (!response.ok) {
+        throw new Error('Failed to fetch bank details');
+      }
+      const data = await response.json();
+      if (data.length > 0) {
+        const lastBank = data[data.length - 1];
+        setImageUrl(lastBank.fileUrl);
+      }
+    } catch (error) {
+      console.error('Error fetching image:', error);
+    }
+  };
+
+
+  console.log(imageUrl);
+  
+  useEffect(()=>{
+fetchImage()
+  },[])
 
   const amount = searchParams.get("amount");
   return (
@@ -104,7 +128,7 @@ export function page({}) {
                   <div className="flex justify-center">
                     <Image
                       src={
-                        "https://api.vishnuprasadkuntar.me/uploads/1722862475727_me.jpg"
+                        "https://api.vishnuprasadkuntar.me"+imageUrl
                       }
                       width={350}
                       height={350}
